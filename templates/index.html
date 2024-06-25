@@ -1,9 +1,9 @@
 <h1>
 Hi {{name}}, you are registered as an {{nationality}} and you are {{age}} years old. <br /> 
 </h1>
-<h1> Describe yourself here in not less than 5 words.</h1>
+<h1> Describe yourself here in not less than 5 words/h1>
 
-<form method="post" action="counter">
+<form method="POST" action="counter">
     {%csrf_token%}
     <textarea name="text" rows="25" cols="100"></textarea><br />
     <input type="submit"/>
