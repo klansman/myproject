@@ -1,3 +1,5 @@
+{% for post in posts %}
 <h1>
-    The number of words in your description is {{amount}}
+    <a href="{% url 'post' post %}">post</a>
 </h1>
+{% endfor %}
