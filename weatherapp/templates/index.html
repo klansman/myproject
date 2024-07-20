@@ -1,0 +1,16 @@
+<h1>Let us tell you the weather for today</h1>
+
+<form action="" method="post">
+{%csrf_token%}
+    <input type="text" name="city" col = '100'><br>
+    <button type="search">search</button>
+</form>
+
+<h1>
+    country code:
+</h1>
+<h3>
+    Coordinates: {{data.coordinates}}</h3>
+<h2>Pressure:{{data.pressure}}</h2>
+<h3>Humidity:{{data.humidity}} </h3>
+<h3>Temperature:{{data.temp}} </h3>
