@@ -28,4 +28,4 @@ def index(request):
         }
     else:
         data={}
-    return render(request, 'index.html', {'data':data, 'city':city})
+    return render(request, 'index.html', {'city':city, 'data':data })

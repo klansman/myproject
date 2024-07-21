@@ -4,7 +4,7 @@
 
     <form action="" method="POST">
         {%csrf_token%}
-        <label for="city">Enter city</label>
+        <label for="city">Enter city</label><br>
         <input type="text" name="city" id="city" value="{{city}}"><br>
         <button type="submit">Get weather</button>
     </form>
