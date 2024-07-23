@@ -1,7 +1,7 @@
 from django.contrib import admin
-from chatapp.models import  Message, Chatroom
+from chatapp.models import  Message, Chatrooms
 
 # Register your models here.
 
 admin.site.register(Message)
-admin.site.register(Chatroom)
+admin.site.register(Chatrooms)
