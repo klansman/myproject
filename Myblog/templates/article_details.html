@@ -3,7 +3,9 @@
 {% block content %}
 
 <h1>{{post.title}}</h1>
-<small>By {{post.author.first_name}} {{post.author.last_name}}</small>
+<small>By {{post.author.first_name}} {{post.author.last_name}}</small><small> | <a href="{% url 'edit_post' post.pk %}">Edit</a></small>
+| <a href="{% url 'edit_post' post.pk %}">Delete</a></small>
+<hr><br>
 <hr><br>
 {{post.body}}
 <br><br>

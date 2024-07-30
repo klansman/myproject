@@ -3,9 +3,9 @@
 {% block content %}
 <h1>Posts</h1>
 <ul>
-{% for post in object_list %} 
+{% for post in object_list reversed %} 
 <li> 
-    <a href="{% url 'article_details' post.pk %}">{{post.title}}</a> -- {{post.created}} | {{post.author.first_name}} <br> {{post.body}} <p></p>
+    <a href="{% url 'article_details' post.pk %}">{{post.title}}</a> -- {{post.created}} | {{post.author.first_name}}  <br> {{post.body|truncatewords:20}} <p></p>
 </li> 
     {% endfor %}
 </ul>
