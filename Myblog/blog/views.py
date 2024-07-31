@@ -10,9 +10,11 @@ from django.urls import reverse_lazy
     #return render(request, 'home.html', {'post': post})
 
 # Class based view creation
+
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
+    ordering = ['created']
 
 class ArticleView(DetailView):
     model = Post
