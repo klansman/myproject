@@ -2,12 +2,19 @@
 
 {% block content %}
 
-<h1>Edit Post</h1><br><br>
+{% if user.is_authenticated %}
+    <h1>Edit Post</h1><br><br>
+    {% if user.id == post.author.id %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}} <!-- Django default form tag as_p means as paragraph-->
-    <button class="btn btn-secondary">Update</button>
-</form>
-
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}} <!-- Django default form tag as_p means as paragraph-->
+                <button class="btn btn-secondary">Update</button>
+            </form>
+        </div>
+    {% endif %}
+{%else%}
+    oops!
+{% endif %}
 {% endblock %}

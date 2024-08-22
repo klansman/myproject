@@ -40,12 +40,41 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportContent">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                                              
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_category' %}">Add category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+                        </li>
+
+                        {%else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Login</a>
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
                         </li>
+                        
+
+                        {% endif %}
+                        <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" type="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Category</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            {% for items in cat_menu%}
+                            <li><a class="dropdown-item active" href="{% url 'category' items|slugify %}">{{items}}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </div>                    
+                        
                     </ul>
                     
                 </div>

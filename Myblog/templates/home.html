@@ -5,9 +5,13 @@
 <ul>
 {% for post in object_list reversed %} 
 <li> 
-    <a href="{% url 'article_details' post.pk %}">{{post.title}}</a> -- {{post.created}} | {{post.author.first_name}}  <br> {{post.body|truncatewords:20}} <p></p>
+    <a href="{% url 'article_details' post.pk %}">{{post.title}}</a> -- {{post.created}} 
+    | {{post.author.first_name}} | <a href="{% url 'category' post.category|slugify %}">{{post.category}}</a>  
+    <br> {{post.body|truncatewords:20}} <p></p>
 </li> 
     {% endfor %}
 </ul>
 <a href="{% url 'add_post' %}" class = "btn btn-primary">Add Post</a>
+
+
 {% endblock %}

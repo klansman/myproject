@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{cats}}</h1>
+<p> {{cat_post}} </p>
+{%if cat_post %}
+    <ul>
+    {% for post in cat_post %} 
+        <li> 
+            <a href="{% url 'article_details' post.pk %}">{{post.title}}</a> -- {{post.created}} 
+            | {{post.author.first_name}} | <a href="{% url 'category' post.category|slugify %}">{{post.category}}</a>  
+            <br> {{post.body|truncatewords:20|safe}} <p></p>
+        </li> 
+    {% empty %}
+        <p>No post found in this Category</p>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

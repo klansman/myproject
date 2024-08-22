@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>Add Category</h1><br><br>
+    <div class="form-group">
+        <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}} <!-- Django default form tag as_p means as paragraph-->
+        <button class="btn btn-secondary">Add</button>
+    </form>
+    </div>
+{% else %}
+    oops!!!
+{% endif %}
+
+
+{% endblock %}

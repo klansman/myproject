@@ -1,0 +1,7 @@
+<h2>all categories</h2>
+<a href="{% url 'index' %}"> home</a>
+{% for category in all %} 
+<li>{{category.catName}}</li>
+{% empty %}
+<li>No Category available </li>
+{% endfor %}

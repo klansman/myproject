@@ -1,19 +1,33 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 # Create your models here.
+class Category(models.Model):
+    catName = models.CharField(max_length=255)
+    def __str__(self):
+        return self.catName
+    def get_absolute_url(self):
+        return reverse('home')
+
+   
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    body = models.TextField()
+    body =RichTextField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=255, default="Sports")
+    likes = models.ManyToManyField(User, related_name='blog_posts')
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
     
+    def total_likes(self):
+        return self.likes.count()
+    
     def get_absolute_url(self):
-        return reverse('article_details', args=(str(self.id))) #1
+        return reverse('home') #1
         #return reverse('home') #alternatively return to home page after creation.
 
     # What this function does is to route the url for any new post to the post itself by making use of the article_details class.
