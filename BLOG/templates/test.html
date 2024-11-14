@@ -5,3 +5,13 @@
 {% empty %}
 <li>No Category available </li>
 {% endfor %}
+
+<h2>{{title}}</h2>
+{% if title %}
+    <a href="{% url 'single' title.id %}">{{title.title}}</a>
+{% else %}
+    <p>No article found</p>
+{% endif %}
+<p>DEBUG: {{title}} </p>
+<p> {{title.created_at}} </p>
+

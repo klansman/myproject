@@ -3,6 +3,7 @@
 {% block content %}
 
 <h1>{{post.title}}</h1>
+
 <small>By {{post.author.first_name}} {{post.author.last_name}} {{post.Username}} | {{post.category}} </small><small> |
     {% if user.is_authenticated %}
         {% if user.id == post.author.id %}
@@ -10,8 +11,14 @@
             <a href="{% url 'edit_post' post.pk %}">Edit</a></small>| <a href="{% url 'delete_post' post.pk %}">Delete</a></small>
         {% endif %}
     {%endif %}
-<hr> {{post.created}} <br>
+<hr> {{post.created}}
 <hr><br>
+{% if post.header_image %}
+    <img src="{{post.header_image.url}}" alt="Post Image">
+{% else %}
+    <small>Image not available</small>
+{% endif %}
+<br>
 {{post.body|safe}}
 <br><br>
 
@@ -31,5 +38,7 @@
     {%else%}
     <small><a href="{% url 'login' %}">login</a> to like and comment </small>
     {% endif %}
+   
+
 
 {% endblock %}
