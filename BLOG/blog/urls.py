@@ -1,5 +1,5 @@
 from django.urls import reverse, path
-from .views import indexView, catView, singleView, testview, addPostView, updateView, deletePostView
+from .views import indexView, catView, singleView, testview, addPostView, updateView, deletePostView, likeView
 
 urlpatterns =[
     path('', indexView.as_view(), name='index'),
@@ -9,4 +9,5 @@ urlpatterns =[
     path('addPost/', addPostView.as_view(), name='addPost'),
     path('single/update/<str:pk>', updateView.as_view(), name='update'),
     path('single/<int:pk>/delete', deletePostView.as_view(), name='delete'),
+    path('like/<str:pk>', likeView, name='like_post'),
 ]

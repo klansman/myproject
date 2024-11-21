@@ -1,10 +1,22 @@
 
-<h1>Add Post</h1>
 
-<div class="form-group">
-    <form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button class=" =btn btn-secondary">Post</button>
-    </form>
-</div>
+{% if user.is_authenticated %}
+    <h1>Add Post</h1>
+
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.media}}
+        {{form.as_p}}
+        <button class=" =btn btn-secondary">Post</button>
+        </form>
+    </div>
+    <script>
+        var name = "{{user.username}}";
+        document.getElementById("user").value = name;
+    </script>
+{% else %}
+    <small>You are not allowed to perform this action</small>
+{% endif %}
+
+   

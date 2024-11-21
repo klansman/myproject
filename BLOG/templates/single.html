@@ -62,7 +62,7 @@
               </form>
 
               <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                <li><a href="{% static 'index.html' %}">Home</a></li>
+                <li><a href="{% url 'index' %}">Home</a></li>
                 <li class="has-children active">
                   <a href="{% static 'category.html' %}">Pages</a>
                   <ul class="dropdown">
@@ -109,7 +109,12 @@
       <div class="row same-height justify-content-center">
         <div class="col-md-6">
           <div class="post-entry text-center">
-            <h1 class="mb-4">{{post.title}}</h1> | <small><a href="{% url 'update' post.pk %}">Edit</a></small> | <small><a href="{% url 'delete' post.pk %}">Delete</a></small>
+            <h1 class="mb-4">{{post.title}}</h1>
+            {% if user.is_authenticated%}
+              {% if user.id == post.author.id %}
+                <small><a href="{% url 'update' post.pk %}">Edit</a></small> | <small><a href="{% url 'delete' post.pk %}">Delete</a></small>
+              {% endif %}
+            {% endif %}
             <div class="post-meta align-items-center text-center">
               <figure class="author-figure mb-0 me-3 d-inline-block"><img src=" {% static 'images/person_1.jpg' %}" alt="Image" class="img-fluid"></figure>
               <span class="d-inline-block mt-1">By {{post.author}}</span>
@@ -130,13 +135,17 @@
         
         
           <div class="post-content-body">
-            {%for paragraph in first_part %}
-              <p>{{ paragraph }}</p>
-            {% endfor %}
-              <div class="row my-4">
+            <div class="row my-4">
+                {%if post.header_image%}
                 <div class="col-md-12 mb-4">
-                  <img src=" {% static 'images/hero_1.jpg' %}" alt="Image placeholder" class="img-fluid rounded">
+                  <img src=" {{post.header_image.url}}" alt="Image placeholder" class="img-fluid rounded">
                 </div>
+                {%endif%}
+                <!-- {%for paragraph in first_part %}
+              <p>{{ paragraph|safe }}</p>
+            {% endfor %}  -->
+            {{post.body|safe}} 
+              
                 <div class="col-md-6 mb-4">
                   <img src=" {% static 'images/img_2_horizontal.jpg' %}" alt="Image placeholder" class="img-fluid rounded">
                 </div>
@@ -144,9 +153,24 @@
                   <img src=" {% static 'images/img_3_horizontal.jpg' %}" alt="Image placeholder" class="img-fluid rounded">
                 </div>
               </div>
-            {% for paragraph in remaining_part %}
-              <p>{{ paragraph }}</p>
-            {% endfor %}
+            <!-- {% for paragraph in remaining_part %}
+              <p>{{ paragraph|safe }}</p>
+            {% endfor %} -->
+            {% if user.is_authenticated %}
+              <form action="{% url 'like_post' post.pk %}" method="POST">
+                {%csrf_token%}
+
+                {% if liked %}
+                  <button type="submit" class="btn btn-danger btn-sm" value="{{post.id}}" name="post_id">Unlike</button>  [{{total_likes}}]
+                {% else %}
+                  <button type="submit" class="btn btn-primary btn-sm" value="{{post.id}}" name="post_id">Like</button> 
+                [{{total_likes}}] 
+                {% endif %}
+            {%else%}
+                [{{total_likes}}] likes
+              <small><a href="{% url 'login' %}">Login to like</a></small>
+            {%endif%}
+            </form>
             <br><br>
             
           </div>
@@ -388,13 +412,13 @@
         {% for post in posts %}
         <div class="col-md-6 col-lg-3">
           <div class="blog-entry">
-            <a href="{% static 'single.html' %}" class="img-link">
+            <a href="{% url 'single' post.id %}" class="img-link">
               <img src=" {% static 'images/img_1_horizontal.jpg' %}" alt="Image" class="img-fluid">
             </a>
             <span class="date">{{post.created_at}}</span>
-            <h2><a href="{% static 'single.html' %}">{{post.title}}</a></h2>
+            <h2><a href="{% url 'single' post.id %}">{{post.title}}</a></h2>
             <p>{{post.body|truncatewords:10}}</p>
-            <p><a href="#" class="read-more">Continue Reading</a></p>
+            <p><a href="{% url 'single' post.id %}" class="read-more">Continue Reading</a></p>
           </div>
         </div>
         {%endfor%}

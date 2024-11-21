@@ -75,18 +75,21 @@
 										<li><a href="#">Menu One</a></li>
 										<li><a href="#">Menu Two</a></li>
 										<li class="has-children">
-											<a href="#">Dropdown</a>
+											<a href="#">Categories</a>
 											<ul class="dropdown">
-												<li><a href="#">Sub Menu One</a></li>
-												<li><a href="#">Sub Menu Two</a></li>
-												<li><a href="#">Sub Menu Three</a></li>
+												{% for cats in all_cats %}
+												<li><a href="{% url 'category' cats %}">{{cats}}</a></li>
+												{%endfor%}
 											</ul>
 										</li>
 									</ul>
 								</li>
-								<li><a href="{% static 'category.html' %}">Culture</a></li>
+								{% for cats in all_cats %}
+								    <li><a href="{% url 'category' cats %}">{{cats}}</a></li>
+								<!-- <li><a href="{% static 'category.html' %}">Culture</a></li>
 								<li><a href="{% static 'services.html' %}">Business</a></li>
-								<li><a href="{% static 'about.html' %}">Politics</a></li>
+								<li><a href="{% static 'about.html' %}">Politics</a></li> -->
+								{%endfor%}
 							</ul>
 						</div>
 						<div class="col-2 text-end">

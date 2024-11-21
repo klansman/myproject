@@ -1,11 +1,13 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Post , Category
 from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView
 from django.db.models import Count
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .forms import PostForms, EditForm
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+
 
 # Create your views here.
 class indexView(ListView):
@@ -76,9 +78,9 @@ class singleView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.get_object()
-        paragraphs = post.body.split('\n\n')
-        context['first_part'] = paragraphs[:4]
-        context['remaining_part'] = paragraphs[4:]
+        paragraphs = post.body.split('\n')
+        context['first_part'] = paragraphs[:3]
+        context['remaining_part'] = paragraphs[3:]
         return context
 
     def get_context_data(self, **kwargs):
@@ -90,6 +92,16 @@ class singleView(DetailView):
         # Pass the list of posts to the context
         context['posts'] = posts
         
+        return context
+    def get_context_data(self, *args, **kwargs):
+        count = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = count.total_likes()
+        liked = False
+        if count.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        context = super(singleView, self).get_context_data(*args, **kwargs)
+        context["total_likes"] = total_likes
+        context["liked"] = liked
         return context
 
 
@@ -116,3 +128,16 @@ class deletePostView(DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('index')
+
+def likeView(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user.id)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+   
+    return HttpResponseRedirect(reverse('single', args=[str(pk)]))
+

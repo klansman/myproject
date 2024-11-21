@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
@@ -26,19 +26,20 @@ class SignUpForm(UserCreationForm):
             self.fields['password2'].widget.attrs['class'] ='form-control'
             self.fields['email'].widget.attrs['class'] = 'form-control'
 
-class EditView(UserChangeForm): 
+class EditProfileForm(UserChangeForm): 
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': "form-control"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': "form-control"}))
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
         def __init__(self, *args, **kwargs):
-            super(EditView, self).__init__(*args, **kwargs)
+            super(EditProfileForm, self).__init__(*args, **kwargs)
             self.fields['username'].widget.attrs['class'] = 'form-control'
             self.fields['first_name'].widget.attrs['class'] = 'form-control'
             self.fields['last_name'].widget.attrs['class'] = 'form-control'
@@ -46,3 +47,15 @@ class EditView(UserChangeForm):
             self.fields['password'].widget.attrs['class'] = 'form-control'
 
 
+# class PassChangeView(PasswordChangeForm):
+#     password_1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+#     password_2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+#     class Meta:
+#         model = User
+#         fields = ('password_1', 'password_2')
+
+#         def __init__(self, *args, **kwargs):
+#             super(PassChangeView, self).__init__(*args, **kwargs)
+#             self.fields['password_1'].widget.attrs['class']='form-control'
+#             self.fields['password_2'].widget.attrs['class']='form-control'

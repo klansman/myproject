@@ -86,9 +86,13 @@
 											</li>
 										</ul>
 									</li>
-									<li><a href="{% url 'login' %}">Login</a></li>
-									<li><a href="{% url 'members:register' %}">SignUp</a></li>
-									<li><a href="{% static 'category.html' %}">Politics</a></li>
+									{% if user.is_authenticated %}
+										<li><a href="{% url 'logout' %}">Logout</a></li>
+										<li><a href="{% url 'addPost' %}">Add Post</a></li>
+									{% else %}
+										<li><a href="{% url 'members:register' %}">SignUp</a></li>
+										<li><a href="{% url 'login' %}">Login</a></li>
+									{% endif %}
 								</ul>
 							</div>
 							<div class="col-2 text-end">

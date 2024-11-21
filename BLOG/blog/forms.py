@@ -12,19 +12,19 @@ for items in choice:
 class PostForms(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'tag', 'body', 'author', 'category', 'body')
+        fields = ('title', 'tag', 'body', 'author', 'category', 'body', 'header_image')
         widgets = {
             'title':forms.TextInput(attrs={'class': 'form-control'}),
             'tag':forms.TextInput(attrs={'class': 'form-control'}),
             'body':forms.Textarea(attrs={'class': 'form-control'}),
-            'author':forms.Select(attrs={'class': 'form-control'}),
+            'author':forms.TextInput(attrs={'class': 'form-control', 'id': 'author', 'value': '', 'type': 'hidden'}),
             'category':forms.Select(choices=choice_list, attrs={'class': 'form-control'})
         }
 
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'tag', 'body')
+        fields = ('title', 'tag', 'body', 'header_image')
         widgets = {
             'title':forms.TextInput(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
