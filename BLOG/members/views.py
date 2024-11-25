@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
-from .forms import SignUpForm
+from .forms import SignUpForm, PassChangingForm
 from django.urls import reverse_lazy
 from django.template.loader import get_template
 from django.http import HttpResponse
@@ -23,21 +23,10 @@ class EditProfileForm(generic.UpdateView):
 
 
 class PassChangeView(PasswordChangeView):
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('login')
+    form_class = PassChangingForm
+    success_url = reverse_lazy('success')
     template_name = 'registration/change-password.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     print(f"PassChangeView called with template: {self.template_name}")
-    #     return render(request, self.template_name)
-    
-    # def dispatch(self, *args, **kwargs):
-    #     try:
-    #         # Attempt to load the template
-    #         template = get_template(self.template_name)
-    #         print(f"Template found: {template.template.name}")
-    #     except Exception as e:
-    #         print(f"Error loading template: {e}")
-    #     return super().dispatch(*args, **kwargs)
-
+def success(request):
+    return render(request, 'members/templates/registration/success.html')
 

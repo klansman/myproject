@@ -1,17 +1,28 @@
-<h2>all categories</h2>
-<a href="{% url 'index' %}"> home</a>
-{% for category in all %} 
-<li>{{category.catName}}</li>
-{% empty %}
-<li>No Category available </li>
-{% endfor %}
+<section class="hero">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Welcome to my blog</h1>
+        <p>Explore my latest articles and projects</p>
+        <p>Welcome to my cozy corner of the internet dedicated to all things bold and beautiful. Here, I invite you to join me on a journey of becoming more emotionally mature, happy and confident as you grow into the best version of you. Let’s get going!</p>
+        <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+      </div>
+      <div class="col-md-6">
+        <img src="https://uchennaoji.wordpress.com/wp-content/uploads/2024/06/uche.jpg?w=640" alt="Profile Picture" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>{{title}}</h2>
-{% if title %}
-    <a href="{% url 'single' title.id %}">{{title.title}}</a>
-{% else %}
-    <p>No article found</p>
-{% endif %}
-<p>DEBUG: {{title}} </p>
-<p> {{title.created_at}} </p>
-
+<section id="aboutme">
+  <div class="container">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 36px; font-weight: bold; color: #333; text-align: center;">I am Uche</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <img src="https://uchennaoji.wordpress.com/wp-content/uploads/2024/06/uche.jpg?w=320" alt="Profile Picture" class="img-fluid" style="border-radius: 50%; width: 200px; height: 200px; object-fit: cover;">
+      </div>
+      <div class="col-md-6">
+      </div>
+    </div>
+  </div>
+</section>

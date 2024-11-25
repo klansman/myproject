@@ -5,6 +5,19 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 # Create your models here.
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    bio = models.CharField(max_length=255, blank=True)
+    profile_pic = models.ImageField(null=True, blank=True, upload_to="images/profile_pic")
+    insta_url = models.URLField(null=True, blank=True, max_length=255)
+    linkedin_url = models.URLField(null=True, blank=True, max_length=255)
+    facebook_url = models.URLField(null=True, blank=True, max_length=255)
+    twitter_url = models.URLField(null=True, blank=True, max_length=255)
+
+    def __str__(self):
+        return str(self.user)
+    
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
